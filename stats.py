@@ -1,3 +1,5 @@
+from typing import Union
+
 def get_num_words(text: str) -> int:
     count = text.split()
     return len(count)
@@ -14,13 +16,15 @@ def count_character_frequencies(text: str) -> dict[str, int]:
     return counts
 
 
-def sort_char_counts(char_counts: dict[str, int]) -> list[dict[str, int]]:
-    list_dicts = []
-    for key, value in char_counts.items():
-        list_dicts.append({"char": key, "num": value})
-
-    def sort_on(items: list[dict[str, int]]) -> int:
+def sort_on(items: list[dict[str, int]]) -> int:
         return items["num"]
 
-    list_dicts.sort(reverse=True, key=sort_on)
-    return list_dicts
+def sort_char_counts(char_counts: dict[str, int]) -> list[dict[str, Union[str, int]]]:
+    sorted_list = []
+    for key, value in char_counts.items():
+        sorted_list.append({"char": key, "num": value})
+    sorted_list.sort(reverse=True, key=sort_on)
+    return sorted_list
+    # list[dict[str, Union[str, int]]]
+    # means: 
+    # all keys are strings, and values can be either string or int.
